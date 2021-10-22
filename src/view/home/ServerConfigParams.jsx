@@ -18,7 +18,8 @@ export default class ServerConfigParams extends React.Component {
     }
 
     loadServerConfigParams = () => {
-        findServerConfigParams().then(res => {
+        findServerConfigParams().then(r => {
+            let res = r.data;
             if (res.code == 0) {
                 this.setState({
                     serverConfigParams: res.data[0]
