@@ -1,7 +1,7 @@
 var apiDomin = `${location.protocol}//${window._env_.REACT_APP_API_HOST}`;
 var apiAKStream = `${location.protocol}//${window._env_.AKSTREAM_WEB_API}`;
-var secret = '035c73f7-bb6b-4889-a715-d9eb2d1925cc';//ZLM秘钥
-var AccessKey = '047I4WS1-U51UBO6W-1J4BT21P-MF17IT99-92J8WIHU-944Q4KIW';//AKStream秘钥
+var secret = `${window._env_.ZlMediaKit_Secret}`;//ZLM秘钥
+var AccessKey = `${window._env_.AKStream_AccessKey}`;//AKStream秘钥
 const APIV1 = apiDomin + '/index/api';
 
 module.exports = {
@@ -14,6 +14,16 @@ module.exports = {
         login: `${APIV1}/login`,
 		
         // searchChannelConfigs: `${apiAKStream}/MediaServer/GetOnlineStreamInfoList`,
+        ptzCtrl:`${apiAKStream}/SipGate/PtzCtrl`,
+        restartMediaServer:`${apiAKStream}/AKStreamKeeper/RestartMediaServer`,
+        stopMediaServer:`${apiAKStream}/AKStreamKeeper/ShutdownMediaServer`,
+        startMediaServer:`${apiAKStream}/AKStreamKeeper/StartMediaServer`,
+        deleteRecordFile:`${apiAKStream}/MediaServer/DeleteRecordFile`,
+        stopRecord:`${apiAKStream}/MediaServer/StopRecord`,
+        startRecord:`${apiAKStream}/MediaServer/StartRecord`,
+        streamStop:`${apiAKStream}/MediaServer/StreamStop`,
+        streamLive:`${apiAKStream}/MediaServer/StreamLive`,
+        getMediaServerList: `${apiAKStream}/MediaServer/GetMediaServerList`,
 		deleteRecordPlanByName:`${apiAKStream}/RecordPlan/DeleteRecordPlanByName`,
 		createRecordPlan:`${apiAKStream}/RecordPlan/CreateRecordPlan`,
 		getRecordPlanList:`${apiAKStream}/RecordPlan/GetRecordPlanList`,
@@ -22,6 +32,7 @@ module.exports = {
 		activeVideoChannel:`${apiAKStream}/MediaServer/ActiveVideoChannel`,
 		getVideoChannelList:`${apiAKStream}/MediaServer/GetVideoChannelList`,
 		getOnlineStreamInfoList:`${apiAKStream}/MediaServer/GetOnlineStreamInfoList`,
+		getRecordFileList:`${apiAKStream}/MediaServer/GetRecordFileList`,
 		getHistroyRecordFileList:`${apiAKStream}/SipGate/GetHistroyRecordFileList`,
 		getHistroyRecordFileStatus:`${apiAKStream}/SipGate/GetHistroyRecordFileStatus`,
 		histroyVideo:`${apiAKStream}/SipGate/HistroyVideo`,
