@@ -27,14 +27,14 @@
   .zpplayer-content{
     overflow: auto;
     flex:1;
-    padding-top:20px;
+    padding-top:2px;
   }
   .zpplayer-header {
     background-color: #3f51b5;
-    min-height: 48px;
+    min-height: 0px;
     border: 0;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
-    line-height: 48px;
+    line-height: 0px;
     text-align: center;
     color: #fff;
 
@@ -43,7 +43,7 @@
   }
   .zpplayer-bottom,
   .zpplayer-video {
-    width: 60%;
+    width: 100%;
     margin: 0px auto;
   }
 
@@ -54,7 +54,7 @@
 
 
   .zpplayer-bottom {
-    margin-top: 20px;
+    margin-top: 2px;
     background-color: #ffffff;
     padding: 0;
   }
@@ -71,11 +71,11 @@
 
 
   .zpplayer-bottom-tab-pane {
-    padding: 0px 20px 20px 20px;
+    padding: 0px 2px 2px 2px;
 
     > div {
       display: flex;
-      margin-bottom: 15px;
+      margin-bottom: 0;
 
       > div:first-child {
         width: 100px;
@@ -107,12 +107,16 @@
     left: 0;
     height: 100%;
     width: 100%;
-    min-width: 400px;
-    min-height: 300px;
+    min-width: 600px;
+    min-height: 400px;
     overflow: hidden;
     background: #000;
   }
-
+  #container {
+    background: rgba(13, 14, 27, 0.7);
+    width: 100%;
+    height: calc(~"100vh - 50px");
+  }
 }
 
 

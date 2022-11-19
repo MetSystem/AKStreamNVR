@@ -55,7 +55,7 @@
 }
 
 .container-shell:before {
-  content: "AKStream player";
+  content: "实时预览";
   position: absolute;
   color: rgb(60, 59, 61);
   top: 4px;

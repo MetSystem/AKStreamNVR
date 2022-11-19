@@ -42,7 +42,7 @@ class App extends React.Component {
             videoBuffer: 0.2, // 缓存时长
             isResize: false,
             text: "",
-            loadingText: "AKStream正在努力的加载视频中",
+            loadingText: "正在加载视频中",
             useMSE: false,
             debug: false,
             hasAudio:this.state.hasAudio,

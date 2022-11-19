@@ -1,5 +1,5 @@
-var apiDomin = `${location.protocol}//${window._env_.REACT_APP_API_HOST}`;
-var apiAKStream = `${location.protocol}//${window._env_.AKSTREAM_WEB_API}`;
+var apiDomin = `${window._env_.REACT_APP_API_HOST}`;
+var apiAKStream = `${window._env_.AKSTREAM_WEB_API}`;
 var secret = `${window._env_.ZlMediaKit_Secret}`;//ZLM秘钥
 var AccessKey = `${window._env_.AKStream_AccessKey}`;//AKStream秘钥
 const APIV1 = apiDomin + '/index/api';

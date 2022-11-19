@@ -73,16 +73,17 @@
   "scripts": {
     "dev": "chmod +x ./env.sh && ./env.sh && mv env-config.js ./public/ && react-app-rewired start",
     "start": "react-app-rewired start",
-    "build": "react-app-rewired build && tar -cvzf zlmediakit_nvr_ui.$npm_package_version.tar.gz -C ./build .",
+    "build": "react-app-rewired build ",
     "postbuild": "tar -cvzf zlmediakit_nvr_ui.$npm_package_version.tar.gz -C ./build ."
   },
   "browserslist": {
     "production": [
-      ">0.2%",
+      ">1%",
       "not dead",
       "not op_mini all"
     ],
     "development": [
+      ">1%",
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"

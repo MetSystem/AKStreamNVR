@@ -10,6 +10,7 @@ import ReactTimeout from "react-timeout";
 import classNames from "classnames";
 import {apiDomin} from "../../config/apiconfig";
 import AKStreamPlayer from '../../component/RvJessibuca/App.js';
+import {StreamLive} from "../../service/channel";
 
 
 @ReactTimeout
@@ -70,38 +71,41 @@ export default class ZLPlayer extends React.Component {
         
 
     }
-
     componentDidMount() {
         document.body.style.minWidth = "100px";
         const ua = UAParser(global.navigator.userAgent);
         this.channelParams = queryString.parse(this.props.location.search);
 
-        const {mediaServerIp, vhost, app, stream, iframe=false} = this.channelParams;
-		const urldata = {
-			play_addrs:{
-				flv:`${apiDomin}/`+app+'/'+stream+'.live.flv',
-				hls:`${apiDomin}/`+app+'/'+stream+'/hls.m3u8',
-				rtmp:`${apiDomin}/`+app+'/'+stream,
-                rtsp:`${apiDomin}/`+app+'/'+stream,
-			}
-		}
-		
-        this.setState({
-            loading: true,
-            iframe
-        }, () => {
-			this.setState({
-			    channelData: urldata,
-                currentUrl:urldata.play_addrs.flv,
-			    params: this.channelParams,
-			}, () => {
-			    this.changePlayType("flvjs")
-			})
-			this.setState({
-			    loading: false,
-			})
-        })
+        const {mediaServerIp,mediaServerId, vhost, app, stream, iframe=false} = this.channelParams;
+		StreamLive(mediaServerId,stream).then(res => {
+			if(res._success && res._statusCode === 200 && res.data)
+			{
+                const urldata = {
+                    play_addrs:{
+                        flv:res.data.playUrl[1],
+                        hls:res.data.playUrl[4],
+                        rtmp:res.data.playUrl[3],
+                        rtsp:res.data.playUrl[2],
+                    }
+                }
 
+                this.setState({
+                    loading: true,
+                    iframe
+                }, () => {
+                    this.setState({
+                        channelData: urldata,
+                        currentUrl:urldata.play_addrs.flv,
+                        params: this.channelParams,
+                    }, () => {
+                        this.changePlayType("flvjs")
+                    })
+                    this.setState({
+                        loading: false,
+                    })
+                })
+            }
+        })
         this.loadData(this.state.recordparams)
     }
 
@@ -282,108 +286,12 @@ export default class ZLPlayer extends React.Component {
                 <div className={"zpplayer-header"}>
                     {channelData.name}
                 </div>
-
                 <div className={"zpplayer-content"}>
-               
                     <div className={"zpplayer-video"}>
                         <AKStreamPlayer 
                             playUrl={this.state.currentUrl}
                             hasAudio={false}
                         />
-                        {/* <div id="video"></div> */}
-                        {/* <easy-player
-                            id="player"
-                            // video-url  undefined 容易白屏 设置为 ''
-                            video-url={this.state.currentUrl || ''}
-                            video-title="AKStreamNVR"
-                            fluent="true" // 流畅模式
-                            stretch // 是否拉伸
-                            muted="true" // 是否静音
-                            hide-big-play-button
-                            live={this.state.isLive}
-                            auto-play
-                            controls
-                            // current-time={currentTime}
-                            // aspect="fullscreen" // 长比高的值过大 可能导致样式布局变化  不随外层div大小
-                        ></easy-player> */}
-                        {/* <live-player 
-                            id="AKPlayer"
-                            video-url={this.state.currentUrl}  // 视频url
-                            fluent = 'true' // 流畅模式
-                            live={this.state.isLive} // 是否直播, 标识要不要显示进度条
-                            stretch='true' // 是否拉伸
-                            controls={true}> 
-                        </live-player> */}
-
-                    </div>
-                    <div className={"zpplayer-bottom"}>
-                        <Tabs type="card"
-                              className="zl-des-card-container"
-                              tabBarExtraContent={
-                                  <div style={{paddingRight: 3}}>
-                                      <Radio.Group defaultValue={playinfo.vtype} buttonStyle="solid" onChange={(e) => {
-                                          this.changePlay(e.target.value)
-                                      }}>
-                                          <Radio.Button value="flv">FLV</Radio.Button>
-                                          <Radio.Button value="rtmp">RTMP</Radio.Button>
-                                          {/* <Radio.Button value="rtsp">RTSP</Radio.Button> */}
-                                          {/* <Tooltip title={!channelData.play_addrs.hls ? "当前通道未开启HLS直播" : null}>
-                                              <Radio.Button value="hlsjs" disabled={!channelData.play_addrs.hls}>HLS</Radio.Button>
-                                          </Tooltip> */}
-
-                                      </Radio.Group>
-                                  </div>
-
-                              }
-                        >
-                            <Tabs.TabPane tab="分享地址&视频源地址" key="1">
-                                <div className={"zpplayer-bottom-tab-pane"}>
-                                    <div>
-                                        <div>分享地址：</div>
-                                        <div><Input value={location.href} addonAfter={<Icon type="copy"/>}/></div>
-                                    </div>
-                                    <div>
-                                        <div>iframe：</div>
-                                        <div><Input value={`<iframe src="${location.href}&iframe=yes&aspect=640x360" width="640" height="360" allowfullscreen allow="autoplay"></iframe>`} addonAfter={<Icon type="copy"/>}/></div>
-                                    </div>
-                                    <div>
-                                        <div>flv：</div>
-                                        <div><Input value={channelData.play_addrs.flv} addonAfter={<Icon type="copy"/>}/></div>
-                                    </div>
-                                    <div>
-                                        <div>rtsp：</div>
-                                        <div><Input value={channelData.play_addrs.rtsp.replace('http','rtsp')} addonAfter={<Icon type="copy"/>}/></div>
-                                    </div>
-                                    <div>
-                                        <div>rtmp：</div>
-                                        <div><Input value={channelData.play_addrs.rtmp.replace('http','rtmp')} addonAfter={<Icon type="copy"/>}/></div>
-                                    </div>
-                                    <div>
-                                        <div>hls：</div>
-                                        <div><Input value={channelData.play_addrs.hls} addonAfter={<Icon type="copy"/>}/></div>
-                                    </div>
-                                </div>
-                            </Tabs.TabPane>
-                            <Tabs.TabPane tab="录像文件" key="2">
-                                <div className={"zpplayer-bottom-tab-pane"}>
-                                <Table 
-                                    columns={columns} 
-                                    dataSource={this.state.data} 
-                                    pagination={{
-                                        onChange: page => {
-                                            this.loadData({
-                                                pageIndex: page,
-                                            })
-                                        },
-                                        current: this.state.pageIndex,
-                                        showQuickJumper: true,
-                                        total: this.state.dataTotal,
-                                        pageSize: this.state.pageSize,
-                                    }} 
-                                />
-                                </div>
-                            </Tabs.TabPane>
-                        </Tabs>
                     </div>
                 </div>
 

@@ -61,8 +61,7 @@ const metadata = {
             type: "menu",
             routerInnerComponent: () => import(`@/view/playback/Playback`),
             routerExact: false,
-        }
-        // {
+        }// ,{
         //     name: '通道配置',
         //     path: 'channel',
         //     icon: 'rvicon-map',
@@ -70,7 +69,8 @@ const metadata = {
         //     type: "menu",
         //     routerInnerComponent: () => import(`@/view/channel/Channel`),
         //     routerExact: false,
-        // },{
+        // }
+        // ,{
         //     name: '版本信息',
         //     path: 'about',
         //     icon: 'rvicon-map',

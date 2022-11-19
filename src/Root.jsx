@@ -26,6 +26,7 @@ export default class Root extends React.Component {
         })
 
         const App = dynamicWrapper(() => import(`@/container/App/App`) )
+        const LivePlayer = dynamicWrapper(() => import(`@/view/live/ZLPlayer`) )
         const ZLPlayer = dynamicWrapper(() => import(`@/view/player/ZLPlayer`) )
 
         return (
@@ -37,7 +38,8 @@ export default class Root extends React.Component {
                                 <ErrorHandler>
                                     <Switch>
                                         <Route exact path="/login" component={UserLayout}/>
-                                        <Route exact path="/play" component={ZLPlayer}/>
+                                        <Route exact path="/live" component={LivePlayer}/>
+                                        <Route exact path="/playvideo" component={ZLPlayer}/>
                                         <PrivateRoute path="/" component={App}/>
                                     </Switch>
                                 </ErrorHandler>

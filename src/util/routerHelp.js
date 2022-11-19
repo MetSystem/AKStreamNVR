@@ -16,7 +16,7 @@ routesMetaData.forEach(data => {
 })
 
 
-export const pageTitleSuffix = " - AKStreamNVR";
+export const pageTitleSuffix = " - Power2 NVR";
 
 
 export const dynamicWrapper = (component, routerData = _routesData) => {
